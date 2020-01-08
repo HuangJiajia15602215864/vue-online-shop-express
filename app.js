@@ -4,8 +4,10 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+// 导入mongoose
 const mongoose = require('mongoose');
 
+// 导入路由中间件
 var index = require('./routes/index');
 var users = require('./routes/users');
 const api = require('./routes/api');
@@ -21,7 +23,7 @@ app.set('view engine', 'jade');
 // 连接数据库
 mongoose.connect(`mongodb://localhost:27017/test`);
 
-// CORS config here
+// 开启资源跨域访问 CORS
 app.all('/*', function(req, res, next) {
   // CORS headers
   res.header("Access-Control-Allow-Origin", "*"); // restrict it to the required domain
@@ -42,6 +44,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// 使用路由中间件
 app.use('/', index);
 app.use('/users', users);
 app.use('/api/v1', api);
@@ -62,4 +65,5 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+// 导出 express 实例，丢给 bin/www 脚本进行调用并启动服务器
 module.exports = app;
