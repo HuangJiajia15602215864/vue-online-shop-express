@@ -21,7 +21,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 // 连接数据库
-mongoose.connect(`mongodb://localhost:27017/test`);
+mongoose.connect(`mongodb://localhost:27017/test`,{useNewUrlParser: true,useUnifiedTopology: true});
 
 // 开启资源跨域访问 CORS
 app.all('/*', function(req, res, next) {
